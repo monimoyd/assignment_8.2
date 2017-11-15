@@ -1,0 +1,16 @@
+ADD JAR /home/acadgild/assignment_8.2/StringConcatUDF.jar;           
+CREATE TEMPORARY FUNCTION concat_ws AS 'stringudf.StringConcatUDF'; 
+
+CREATE TABLE IF NOT EXISTS customers
+(
+    title string,    
+    first_name string,
+    last_name string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+LOAD DATA LOCAL INPATH '/home/acadgild/assignment_8.2/customers.txt'
+OVERWRITE INTO TABLE customers;
+
+
+SELECT concat_ws('-', array(title, first_name, last_name)) FROM customers;
